@@ -26,4 +26,4 @@ app.get('/api/auth/profile', authMiddleware, (req, res) => {
   res.json({ message: 'Welcome!', user: req.user })
 })
 
-app.listen(process.env.PORT, () => console.log('🚀 API running on http://localhost:3000'))
+app.listen(process.env.PORT, () => console.log('🚀 API running on http://localhost:8000'))
