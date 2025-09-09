@@ -5,6 +5,42 @@ import { authMiddleware } from './src/supabase/middleware.js'
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended:false}));
+
+const whitelist = new Set([
+  "http://localhost:3000",
+  "http://localhost:5000",
+  "https://website-backend-q8wu.onrender.com",
+  "https://onechoice-test.netlify.app",
+  "https://onchoice-agency.netlify.app",
+  "https://onechoice-admin.netlify.app",
+]);
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || whitelist.has(origin)) {
+        callback(null, true);
+      } else {
+        const error = new Error("Not allowed by CORS");
+        error.status = 450;
+        callback(error);
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "X-Requested-With",
+      "X-CSRF-Token",
+      "Accept-Language",
+    ],
+    exposedHeaders: ["Content-Length", "X-Powered-By"],
+    maxAge: 600,
+    credentials: true,
+  })
+);
+
+
 // Signup
 app.post('/api/auth/signup', async (req, res) => {
   const { email, password } = req.body
