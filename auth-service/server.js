@@ -1,6 +1,7 @@
 import express from 'express'
 import { supabase } from './src/supabase/supabaseClient.js'
 import { authMiddleware } from './src/supabase/middleware.js'
+import cors from "cors";
 
 const app = express()
 app.use(express.json())
@@ -9,10 +10,7 @@ app.use(express.urlencoded({extended:false}));
 const whitelist = new Set([
   "http://localhost:3000",
   "http://localhost:5000",
-  "https://website-backend-q8wu.onrender.com",
-  "https://onechoice-test.netlify.app",
-  "https://onchoice-agency.netlify.app",
-  "https://onechoice-admin.netlify.app",
+  
 ]);
 
 app.use(
